@@ -31,7 +31,6 @@ header {
     background-color: #111;
     color: #ffffff;
     font-size: 1rem;
-    transition: border-color 0.3s;
 }
 
 .SignupForm input:focus {
@@ -54,7 +53,6 @@ header {
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .ProceedButton button:hover {

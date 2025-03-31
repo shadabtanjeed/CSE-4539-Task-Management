@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignupPage.css';
 
 function SignupPage() {
+    const [email, setEmail] = useState('');
     const navigate = useNavigate();
 
     const handleProceed = () => {
         // add form validation later.
-        navigate('/otp-verification');
+        navigate('/otp-verification', { state: { email } });
     };
 
     return (
@@ -18,9 +19,15 @@ function SignupPage() {
                     Create a new account.
                 </header>
                 <div className="SignupForm">
-                    <input type="email" placeholder="Email" />
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <input type="text" placeholder="Username" required />
+                    <input type="password" placeholder="Password" required />
                 </div>
                 <div className="ProceedButton">
                     <button onClick={handleProceed}>Proceed</button>

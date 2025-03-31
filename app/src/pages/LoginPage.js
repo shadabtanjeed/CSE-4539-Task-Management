@@ -10,8 +10,8 @@ function LoginPage() {
                     Login to your account.
                 </header>
                 <div className="LoginForm">
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
+                    <input type="text" placeholder="Username" required />
+                    <input type="password" placeholder="Password" required />
                 </div>
                 <div className="LoginButton">
                     <button>Login</button>

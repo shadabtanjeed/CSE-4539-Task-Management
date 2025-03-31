@@ -15,35 +15,49 @@ header {
     text-align: center;
 }
 
-.LoginForm {
+.verification-message {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #ccc;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+.email-highlight {
+    color: #2ecc71;
+    font-weight: 500;
+}
+
+.OtpForm {
     width: 100%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
-.LoginForm input {
+.OtpForm input {
     padding: 12px 16px;
     border-radius: 8px;
     border: 1px solid #333;
     background-color: #111;
     color: #ffffff;
     font-size: 1rem;
+    text-align: center;
+    letter-spacing: 4px;
 }
 
-.LoginForm input:focus {
+.OtpForm input:focus {
     outline: none;
     border-color: #2ecc71;
 }
 
-.LoginButton {
+.VerifyButton {
     width: 100%;
     max-width: 400px;
 }
 
-.LoginButton button {
+.VerifyButton button {
     width: 100%;
     padding: 12px;
     background-color: #2ecc71;
@@ -55,24 +69,8 @@ header {
     cursor: pointer;
 }
 
-.LoginButton button:hover {
+.VerifyButton button:hover {
     background-color: #27ae60;
     transform: translateY(-2px);
-}
-
-.register-section {
-    margin-top: 1.5rem;
-    text-align: center;
-    color: #ccc;
-    font-size: 0.9rem;
-}
-
-.register-section a {
-    color: #2ecc71;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.register-section a:hover {
-    color: #27ae60;
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
 }
