@@ -14,6 +14,9 @@ function LoginPage() {
             <div className="LoginButton">
                 <button>Login</button>
             </div>
+            <div className="register-section">
+                Don't have an account? <a href="/signup">Register</a>
+            </div>
         </div>
     );
 }

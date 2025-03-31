@@ -11,7 +11,7 @@ header {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 2rem;
-    color: #fff;
+    color: #ffffff;
     text-align: center;
 }
 
@@ -29,7 +29,7 @@ header {
     border-radius: 8px;
     border: 1px solid #333;
     background-color: #111;
-    color: #fff;
+    color: #ffffff;
     font-size: 1rem;
     transition: border-color 0.3s;
 }
@@ -60,4 +60,21 @@ header {
 .LoginButton button:hover {
     background-color: #27ae60;
     transform: translateY(-2px);
+}
+
+.register-section {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.register-section a {
+    color: #2ecc71;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-section a:hover {
+    color: #27ae60;
 }
