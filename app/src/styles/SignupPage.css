@@ -1,0 +1,85 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+header {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.SignupForm {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.SignupForm input {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #111;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.SignupForm input:focus {
+    outline: none;
+    border-color: #2ecc71;
+}
+
+.ProceedButton {
+    width: 100%;
+    max-width: 400px;
+}
+
+.ProceedButton button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2ecc71;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ProceedButton button:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+}
+
+.ProceedButton button:active {
+    transform: translateY(0);
+}
+
+.login-section {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.login-section a {
+    color: #2ecc71;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-section a:hover {
+    color: #27ae60;
+}

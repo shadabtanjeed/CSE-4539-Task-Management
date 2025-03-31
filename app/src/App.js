@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // page imports
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 
 import './styles/global.css';
 
@@ -14,6 +15,11 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+
+
+
+
 
       </Routes>
     </Router>
