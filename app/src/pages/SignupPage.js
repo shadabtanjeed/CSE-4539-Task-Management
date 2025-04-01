@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../styles/SignupPage.css';
 
 function SignupPage() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
+        try {
+            // store the registration data in sessionStorage for later use
+            sessionStorage.setItem('registrationData', JSON.stringify({ email, username, password }));
 
-        navigate('/otp-verification', { state: { email } });
+            // Generate OTP
+            await axios.post('http://localhost:5000/otp/generate_otp', { email });
+
+            navigate('/otp-verification', { state: { email } });
+        } catch (err) {
+            console.error('Error generating OTP:', err);
+            alert(err.response?.data?.message || 'Failed to send verification code');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -30,6 +45,7 @@ function SignupPage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
+                            disabled={isLoading}
                         />
                         <input
                             type="text"
@@ -37,6 +53,7 @@ function SignupPage() {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
+                            disabled={isLoading}
                         />
                         <input
                             type="password"
@@ -44,10 +61,13 @@ function SignupPage() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            disabled={isLoading}
                         />
                     </div>
                     <div className="ProceedButton">
-                        <button type="submit">Proceed</button>
+                        <button type="submit">
+                            Proceed
+                        </button>
                     </div>
                 </form>
                 <div className="login-section">

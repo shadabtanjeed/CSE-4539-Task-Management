@@ -7,6 +7,7 @@ const add_user = async (req, res) => {
     try {
         const { email, username, password } = req.body;
 
+        let user_type = req.body.user_type || 'general_user';
 
         if (!email || !username || !password) {
             return res.status(400).json({ message: "All fields are required" });
@@ -31,9 +32,9 @@ const add_user = async (req, res) => {
         const newUser = new User({
             email,
             username,
-            password: hashedPassword
+            password: hashedPassword,
+            user_type: user_type
         });
-
 
         await newUser.save();
 
