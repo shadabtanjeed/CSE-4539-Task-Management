@@ -1,6 +1,9 @@
 const OTP = require('../models/otpModel');
 const crypto = require('crypto');
+const { Resend } = require('resend');
 require('dotenv').config();
+
+const resend = new Resend(process.env.resend_api_key);
 
 // Create OTP and save to db
 const generate_otp = async (req, res) => {
@@ -23,7 +26,6 @@ const generate_otp = async (req, res) => {
 
         // If OTP record exists, update it
         if (otpRecord) {
-
             otpRecord.otp = randomOTP;
             otpRecord.generated_at = now;
             otpRecord.expires_at = expirationTime;
@@ -32,7 +34,6 @@ const generate_otp = async (req, res) => {
         }
         // Create new OTP record 
         else {
-
             otpRecord = new OTP({
                 email,
                 otp: randomOTP,
@@ -43,11 +44,28 @@ const generate_otp = async (req, res) => {
             await otpRecord.save();
         }
 
+        // Send OTP via email using Resend
+        try {
+            await resend.emails.send({
+                from: 'Task Management System <onboarding@resend.dev>',
+                to: [email],
+                subject: 'Your Verification Code',
+                html: `
+                    <div>
+                        <h2>Task Management App - Verification Code</h2>
+                        <p>Your verification code is: ${randomOTP}</p>
+                        <p>This code will expire in 10 minutes.</p>
+                    </div>
+                    `,
+            });
+            console.log('Email sent successfully');
+        } catch (emailError) {
+            console.error('Failed to send email:', emailError);
+        }
 
         return res.status(200).json({
             message: "OTP generated successfully",
-            email,
-            otp: randomOTP
+            email
         });
 
     } catch (error) {
