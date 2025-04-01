@@ -21,8 +21,10 @@ app.use(cookieParser());
 
 // Import routes
 const authRoutes = require('./routes/auth_routes');
+const otpRoutes = require('./routes/otp_routes');
 
 app.use('/auth', authRoutes);
+app.use('/otp', otpRoutes);
 
 
 app.listen(port, () => {
