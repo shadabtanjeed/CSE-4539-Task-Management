@@ -5,7 +5,6 @@ import '../styles/OtpVerificationPage.css';
 function OtpVerificationPage() {
     const [otp, setOtp] = useState('');
     const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const location = useLocation();
 
