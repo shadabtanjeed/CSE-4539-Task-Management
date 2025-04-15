@@ -163,7 +163,7 @@ The server runs on `http://localhost:5000` and provides the following endpoints:
 2. **Login** to get a JWT token
 3. **For protected routes**, add the token to your request headers:
 
-```json
+```
 Authorization: Bearer your_jwt_token
 ```
 
