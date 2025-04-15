@@ -36,4 +36,23 @@ const createNewTask = async (req, res) => {
     }
 };
 
-module.exports = { createNewTask };
+const getUserTasks = async (req, res) => {
+    try {
+        const username = req.user.username;
+
+
+        const tasks = await Task.find({ createdBy: username });
+
+
+        return res.status(200).json({
+            message: "Tasks retrieved successfully",
+            count: tasks.length,
+            tasks: tasks
+        });
+    } catch (error) {
+        console.error("Error retrieving tasks:", error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+module.exports = { createNewTask, getUserTasks };
