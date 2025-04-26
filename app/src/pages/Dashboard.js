@@ -36,7 +36,7 @@ function Dashboard() {
         setFilteredTasks(filtered);
     }, [tasks, activeFilter, activeCategoryFilter, activeSort]);
 
-    // Function to apply sorting based on selected option
+    // sorting function
     const applySorting = (tasks, sortOption) => {
         switch (sortOption) {
             case 'dueDate-asc':
@@ -82,13 +82,20 @@ function Dashboard() {
         }
     };
 
-    // Modified handler for sort dropdown
+
     const handleSortChange = (sortOption) => {
         if (sortOption === '') {
             setActiveSort(null);
         } else {
             setActiveSort(sortOption);
         }
+    };
+
+
+    const clearAllFilters = () => {
+        setActiveFilter(null);
+        setActiveCategoryFilter(null);
+        setActiveSort(null);
     };
 
     // Get priority color based on task priority
@@ -229,7 +236,14 @@ function Dashboard() {
                             </div>
                         </div>
 
-
+                        {/* Clear Filters Button */}
+                        <button
+                            className="clear-filters-btn"
+                            onClick={clearAllFilters}
+                            disabled={!activeFilter && !activeCategoryFilter && !activeSort}
+                        >
+                            Clear All Filters
+                        </button>
                     </div>
 
                     <div className="tasks-container">
