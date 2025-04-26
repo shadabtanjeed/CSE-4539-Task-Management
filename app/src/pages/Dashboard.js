@@ -78,6 +78,21 @@ function Dashboard() {
         }
     };
 
+    // Function to delete a task
+    const deleteTask = async (taskId) => {
+        if (window.confirm('Are you sure you want to delete this task?')) {
+            try {
+                await api.delete(`/tasks/delete-task/${taskId}`);
+
+                setTasks(prevTasks => prevTasks.filter(task => task.taskId !== taskId));
+                alert('Task deleted successfully');
+            } catch (err) {
+                console.error('Error deleting task:', err);
+                alert(err.response?.data?.message || 'Failed to delete task');
+            }
+        }
+    };
+
     const clearAllFilters = () => {
         setActiveFilter(null);
         setActiveCategoryFilter(null);
@@ -117,6 +132,7 @@ function Dashboard() {
                         isLoading={isLoading}
                         error={error}
                         clearSearch={clearSearch}
+                        deleteTask={deleteTask}
                     />
                 </div>
             </main>

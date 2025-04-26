@@ -9,7 +9,8 @@ function TaskBody({
     setSearchTerm,
     isLoading,
     error,
-    clearSearch
+    clearSearch,
+    deleteTask
 }) {
     const navigate = useNavigate();
 
@@ -146,7 +147,10 @@ function TaskBody({
                                 <button className="task-btn details-btn">
                                     Details
                                 </button>
-                                <button className="task-btn delete-btn">
+                                <button
+                                    className="task-btn delete-btn"
+                                    onClick={() => deleteTask(task.taskId)}
+                                >
                                     Delete
                                 </button>
                             </div>
