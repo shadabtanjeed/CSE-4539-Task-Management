@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Add this import
 import api from '../utils/api';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
+    const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [activeFilter, setActiveFilter] = useState(null);
@@ -297,7 +299,10 @@ function Dashboard() {
                             </div>
 
                             {/* Add New Task button */}
-                            <button className="add-task-btn">
+                            <button
+                                className="add-task-btn"
+                                onClick={() => navigate('/add-task')}
+                            >
                                 <span className="plus-icon">+</span> Add New Task
                             </button>
                         </div>
