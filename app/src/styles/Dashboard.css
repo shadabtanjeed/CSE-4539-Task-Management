@@ -462,3 +462,30 @@
         width: 100%;
     }
 }
+
+.task-meta-readonly {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.task-meta-readonly .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.task-meta-readonly .meta-label {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.task-meta-readonly .meta-value {
+    font-size: 0.9rem;
+    color: #ddd;
+}

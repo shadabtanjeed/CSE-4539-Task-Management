@@ -144,7 +144,10 @@ function TaskBody({
 
                             {/* Task action buttons */}
                             <div className="task-actions">
-                                <button className="task-btn details-btn">
+                                <button
+                                    className="task-btn details-btn"
+                                    onClick={() => navigate(`/task/${task.taskId}`)}
+                                >
                                     Details
                                 </button>
                                 <button

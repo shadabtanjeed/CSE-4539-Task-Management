@@ -173,3 +173,39 @@ textarea {
         width: 100%;
     }
 }
+
+.task-meta-compact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #333;
+}
+
+.meta-pair {
+    display: flex;
+    align-items: center;
+}
+
+.task-meta-compact .meta-label {
+    font-size: 0.8rem;
+    color: #777;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.task-meta-compact .meta-value {
+    font-size: 0.8rem;
+    color: #bbb;
+    margin-left: 0.25rem;
+}
+
+@media (max-width: 600px) {
+    .task-meta-compact {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

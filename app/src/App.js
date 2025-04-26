@@ -6,6 +6,7 @@ import OtpVerificationPage from './pages/OtpVerificationPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import NewTask from './pages/NewTask';
+import TaskDetailsPage from './pages/TaskDetailsPage';
 import './styles/global.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/otp-verification" element={<OtpVerificationPage />} />
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/add-task" element={<ProtectedRoute element={<NewTask />} />} />
+        <Route path="/task/:taskId" element={<ProtectedRoute element={<TaskDetailsPage />} />} />
       </Routes>
     </Router>
   );
