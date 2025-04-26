@@ -81,10 +81,45 @@
     display: inline-block;
 }
 
+.category-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 .filter-option:hover {
     color: #9a9a9a;
 }
 
+
+.category-work {
+    background-color: #3498db;
+}
+
+.category-personal {
+    background-color: #9b59b6;
+}
+
+.category-study {
+    background-color: #f39c12;
+}
+
+.category-groceries {
+    background-color: #1abc9c;
+}
+
+.category-errands {
+    background-color: #e74c3c;
+}
+
+.category-misc {
+    background-color: #95a5a6;
+}
+
+.category-other {
+    background-color: #7f8c8d;
+}
 
 .tasks-container {
     flex: 1;
@@ -133,6 +168,15 @@
     border-radius: 12px;
     text-transform: capitalize;
     font-weight: 500;
+}
+
+.category-indicator {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-right: 0.5rem;
 }
 
 .task-description {

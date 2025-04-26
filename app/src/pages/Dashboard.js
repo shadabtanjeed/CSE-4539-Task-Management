@@ -6,22 +6,29 @@ function Dashboard() {
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [activeFilter, setActiveFilter] = useState(null);
+    const [activeCategoryFilter, setActiveCategoryFilter] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Fetch tasks when component mounts
         fetchTasks();
     }, []);
 
     useEffect(() => {
-        // Apply filters when tasks or activeFilter changes
+        let filtered = [...tasks];
+
+        // Apply priority filter if set
         if (activeFilter) {
-            setFilteredTasks(tasks.filter(task => task.priority === activeFilter));
-        } else {
-            setFilteredTasks(tasks);
+            filtered = filtered.filter(task => task.priority === activeFilter);
         }
-    }, [tasks, activeFilter]);
+
+        // Apply category filter if set
+        if (activeCategoryFilter) {
+            filtered = filtered.filter(task => task.category === activeCategoryFilter);
+        }
+
+        setFilteredTasks(filtered);
+    }, [tasks, activeFilter, activeCategoryFilter]);
 
     const fetchTasks = async () => {
         try {
@@ -44,6 +51,16 @@ function Dashboard() {
         } else {
             // Apply the new filter
             setActiveFilter(priority);
+        }
+    };
+
+    const handleCategoryFilter = (category) => {
+        if (activeCategoryFilter === category) {
+            // If clicking the active filter, clear it
+            setActiveCategoryFilter(null);
+        } else {
+            // Apply the new filter
+            setActiveCategoryFilter(category);
         }
     };
 
@@ -81,6 +98,8 @@ function Dashboard() {
                 <div className="dashboard-layout">
                     <div className="filter-sidebar">
                         <h3>Filters</h3>
+
+                        {/* Priority Filter Section */}
                         <div className="filter-group">
                             <h4>Priority</h4>
                             <div className="filter-options">
@@ -110,13 +129,74 @@ function Dashboard() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Category Filter Section - Without colors */}
+                        <div className="filter-group">
+                            <h4>Category</h4>
+                            <div className="filter-options">
+                                <div
+                                    className="filter-option"
+                                    onClick={() => handleCategoryFilter('work')}
+                                    style={{ color: activeCategoryFilter === 'work' ? '#fff' : '' }}
+                                >
+                                    <span>Work</span>
+                                </div>
+                                <div
+                                    className="filter-option"
+                                    onClick={() => handleCategoryFilter('personal')}
+                                    style={{ color: activeCategoryFilter === 'personal' ? '#fff' : '' }}
+                                >
+                                    <span>Personal</span>
+                                </div>
+                                <div
+                                    className="filter-option"
+                                    onClick={() => handleCategoryFilter('study')}
+                                    style={{ color: activeCategoryFilter === 'study' ? '#fff' : '' }}
+                                >
+                                    <span>Study</span>
+                                </div>
+                                <div
+                                    className="filter-option"
+                                    onClick={() => handleCategoryFilter('groceries')}
+                                    style={{ color: activeCategoryFilter === 'groceries' ? '#fff' : '' }}
+                                >
+                                    <span>Groceries</span>
+                                </div>
+                                <div
+                                    className="filter-option"
+                                    onClick={() => handleCategoryFilter('errands')}
+                                    style={{ color: activeCategoryFilter === 'errands' ? '#fff' : '' }}
+                                >
+                                    <span>Errands</span>
+                                </div>
+                                <div
+                                    className="filter-option"
+                                    onClick={() => handleCategoryFilter('misc')}
+                                    style={{ color: activeCategoryFilter === 'misc' ? '#fff' : '' }}
+                                >
+                                    <span>Miscellaneous</span>
+                                </div>
+                                <div
+                                    className="filter-option"
+                                    onClick={() => handleCategoryFilter('other')}
+                                    style={{ color: activeCategoryFilter === 'other' ? '#fff' : '' }}
+                                >
+                                    <span>Other</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="tasks-container">
                         <h3>
-                            {activeFilter
-                                ? `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Priority Tasks`
-                                : 'All Tasks'}
+                            {/* Update header to show both filters if active */}
+                            {activeFilter && activeCategoryFilter
+                                ? `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Priority ${activeCategoryFilter.charAt(0).toUpperCase() + activeCategoryFilter.slice(1)} Tasks`
+                                : activeFilter
+                                    ? `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Priority Tasks`
+                                    : activeCategoryFilter
+                                        ? `${activeCategoryFilter.charAt(0).toUpperCase() + activeCategoryFilter.slice(1)} Tasks`
+                                        : 'All Tasks'}
                         </h3>
 
                         {isLoading ? (
@@ -125,7 +205,16 @@ function Dashboard() {
                             <div className="error-message">{error}</div>
                         ) : filteredTasks.length === 0 ? (
                             <div className="empty-state">
-                                <p>{activeFilter ? `No ${activeFilter} priority tasks found.` : "You don't have any tasks yet."}</p>
+                                <p>
+                                    {activeFilter && activeCategoryFilter
+                                        ? `No ${activeFilter} priority ${activeCategoryFilter} tasks found.`
+                                        : activeFilter
+                                            ? `No ${activeFilter} priority tasks found.`
+                                            : activeCategoryFilter
+                                                ? `No ${activeCategoryFilter} tasks found.`
+                                                : "You don't have any tasks yet."
+                                    }
+                                </p>
                             </div>
                         ) : (
                             <div className="task-cards">
