@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import FilterSectionComponent from '../components/FilterSectionComponent';
 import TaskBody from '../components/TaskBody';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
+    const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [activeFilter, setActiveFilter] = useState(null);
@@ -17,6 +19,8 @@ function Dashboard() {
     useEffect(() => {
         fetchTasks();
     }, []);
+
+
 
     useEffect(() => {
         let filtered = [...tasks];
@@ -47,6 +51,16 @@ function Dashboard() {
 
         setFilteredTasks(filtered);
     }, [tasks, activeFilter, activeCategoryFilter, activeSort, searchTerm]);
+
+    //logout function
+    const handleLogout = () => {
+        // Clear user data from localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        // Redirect to login page
+        navigate('/login');
+    };
 
     // sorting functions
     const applySorting = (tasks, sortOption) => {
@@ -108,6 +122,11 @@ function Dashboard() {
         <div className="dashboard-container">
             <header className="dashboard-header">
                 <h1>Your Tasks</h1>
+                {/* logout button */}
+                <button className="logout-btn" onClick={handleLogout}>
+                    Logout
+                </button>
+
             </header>
 
             <main className="dashboard-content">

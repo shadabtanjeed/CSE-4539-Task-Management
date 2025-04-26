@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../utils/api';
-import '../styles/NewTask.css'; // Reuse existing styles
+import '../styles/NewTask.css';
 
 function TaskDetailsPage() {
     const { taskId } = useParams();
