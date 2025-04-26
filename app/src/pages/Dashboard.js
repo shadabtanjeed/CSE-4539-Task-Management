@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
+import FilterSectionComponent from '../components/FilterSectionComponent';
+import TaskBody from '../components/TaskBody';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
-    const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [activeFilter, setActiveFilter] = useState(null);
@@ -78,30 +78,6 @@ function Dashboard() {
         }
     };
 
-    const handleFilterClick = (priority) => {
-        if (activeFilter === priority) {
-            setActiveFilter(null);
-        } else {
-            setActiveFilter(priority);
-        }
-    };
-
-    const handleCategoryFilter = (category) => {
-        if (activeCategoryFilter === category) {
-            setActiveCategoryFilter(null);
-        } else {
-            setActiveCategoryFilter(category);
-        }
-    };
-
-    const handleSortChange = (sortOption) => {
-        if (sortOption === '') {
-            setActiveSort(null);
-        } else {
-            setActiveSort(sortOption);
-        }
-    };
-
     const clearAllFilters = () => {
         setActiveFilter(null);
         setActiveCategoryFilter(null);
@@ -109,38 +85,8 @@ function Dashboard() {
         setSearchTerm('');
     };
 
-
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
-    // Clear search term
     const clearSearch = () => {
         setSearchTerm('');
-    };
-
-    // Get priority color based on task priority
-    const getPriorityColor = (priority) => {
-        switch (priority) {
-            case 'high':
-                return '#ff6b6b';
-            case 'medium':
-                return '#f9ca24';
-            case 'low':
-                return '#2ecc71';
-            default:
-                return '#2ecc71';
-        }
-    };
-
-    // Format date for display
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        });
     };
 
     return (
@@ -151,220 +97,27 @@ function Dashboard() {
 
             <main className="dashboard-content">
                 <div className="dashboard-layout">
-                    <div className="filter-sidebar">
-                        <h3>Filters</h3>
+                    <FilterSectionComponent
+                        activeFilter={activeFilter}
+                        setActiveFilter={setActiveFilter}
+                        activeCategoryFilter={activeCategoryFilter}
+                        setActiveCategoryFilter={setActiveCategoryFilter}
+                        activeSort={activeSort}
+                        setActiveSort={setActiveSort}
+                        searchTerm={searchTerm}
+                        clearAllFilters={clearAllFilters}
+                    />
 
-                        {/* Sort Section with Dropdown */}
-                        <div className="filter-group">
-                            <h4>Sort By</h4>
-                            <select
-                                className="sort-dropdown"
-                                value={activeSort || ''}
-                                onChange={(e) => handleSortChange(e.target.value)}
-                            >
-                                <option value="">Default Order</option>
-                                <option value="dueDate-asc">Due Date (Earliest)</option>
-                                <option value="dueDate-desc">Due Date (Latest)</option>
-                                <option value="createdAt-asc">Creation Date (Oldest First)</option>
-                                <option value="createdAt-desc">Creation Date (Newest First)</option>
-                            </select>
-                        </div>
-
-                        {/* Priority Filter Section */}
-                        <div className="filter-group">
-                            <h4>Priority</h4>
-                            <div className="filter-options">
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleFilterClick('high')}
-                                    style={{ color: activeFilter === 'high' ? '#ff6b6b' : '' }}
-                                >
-                                    <span className="priority-dot" style={{ backgroundColor: '#ff6b6b' }}></span>
-                                    <span>High</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleFilterClick('medium')}
-                                    style={{ color: activeFilter === 'medium' ? '#f9ca24' : '' }}
-                                >
-                                    <span className="priority-dot" style={{ backgroundColor: '#f9ca24' }}></span>
-                                    <span>Medium</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleFilterClick('low')}
-                                    style={{ color: activeFilter === 'low' ? '#2ecc71' : '' }}
-                                >
-                                    <span className="priority-dot" style={{ backgroundColor: '#2ecc71' }}></span>
-                                    <span>Low</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Category Filter Section */}
-                        <div className="filter-group">
-                            <h4>Category</h4>
-                            <div className="filter-options">
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleCategoryFilter('work')}
-                                    style={{ color: activeCategoryFilter === 'work' ? '#fff' : '' }}
-                                >
-                                    <span>Work</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleCategoryFilter('personal')}
-                                    style={{ color: activeCategoryFilter === 'personal' ? '#fff' : '' }}
-                                >
-                                    <span>Personal</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleCategoryFilter('study')}
-                                    style={{ color: activeCategoryFilter === 'study' ? '#fff' : '' }}
-                                >
-                                    <span>Study</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleCategoryFilter('groceries')}
-                                    style={{ color: activeCategoryFilter === 'groceries' ? '#fff' : '' }}
-                                >
-                                    <span>Groceries</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleCategoryFilter('errands')}
-                                    style={{ color: activeCategoryFilter === 'errands' ? '#fff' : '' }}
-                                >
-                                    <span>Errands</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleCategoryFilter('misc')}
-                                    style={{ color: activeCategoryFilter === 'misc' ? '#fff' : '' }}
-                                >
-                                    <span>Miscellaneous</span>
-                                </div>
-                                <div
-                                    className="filter-option"
-                                    onClick={() => handleCategoryFilter('other')}
-                                    style={{ color: activeCategoryFilter === 'other' ? '#fff' : '' }}
-                                >
-                                    <span>Other</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Clear Filters Button */}
-                        <button
-                            className="clear-filters-btn"
-                            onClick={clearAllFilters}
-                            disabled={!activeFilter && !activeCategoryFilter && !activeSort && !searchTerm}
-                        >
-                            Clear All Filters
-                        </button>
-                    </div>
-
-                    <div className="tasks-container">
-                        <h3>
-                            {activeFilter && activeCategoryFilter
-                                ? `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Priority ${activeCategoryFilter.charAt(0).toUpperCase() + activeCategoryFilter.slice(1)} Tasks`
-                                : activeFilter
-                                    ? `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Priority Tasks`
-                                    : activeCategoryFilter
-                                        ? `${activeCategoryFilter.charAt(0).toUpperCase() + activeCategoryFilter.slice(1)} Tasks`
-                                        : 'All Tasks'}
-                        </h3>
-
-                        {/* Search and Add Task */}
-                        <div className="task-actions-row">
-                            {/* Search bar */}
-                            <div className="task-search-container">
-                                <div className="search-input-wrapper">
-                                    <input
-                                        type="text"
-                                        placeholder="Search in titles and descriptions..."
-                                        className="task-search-input"
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                    {searchTerm && (
-                                        <button className="search-clear-btn" onClick={clearSearch}>
-                                            ×
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Add New Task button */}
-                            <button
-                                className="add-task-btn"
-                                onClick={() => navigate('/add-task')}
-                            >
-                                <span className="plus-icon">+</span> Add New Task
-                            </button>
-                        </div>
-
-                        {isLoading ? (
-                            <div className="loading-message">Loading tasks...</div>
-                        ) : error ? (
-                            <div className="error-message">{error}</div>
-                        ) : filteredTasks.length === 0 ? (
-                            <div className="empty-state">
-                                <p>
-                                    {searchTerm
-                                        ? `No tasks matching "${searchTerm}" found.`
-                                        : activeFilter && activeCategoryFilter
-                                            ? `No ${activeFilter} priority ${activeCategoryFilter} tasks found.`
-                                            : activeFilter
-                                                ? `No ${activeFilter} priority tasks found.`
-                                                : activeCategoryFilter
-                                                    ? `No ${activeCategoryFilter} tasks found.`
-                                                    : "You don't have any tasks yet."
-                                    }
-                                </p>
-                            </div>
-                        ) : (
-                            <div className="task-cards">
-                                {filteredTasks.map(task => (
-                                    <div className="task-card" key={task.taskId}>
-                                        <div className="task-card-header">
-                                            <h3 className="task-title">{task.title}</h3>
-                                            <span
-                                                className="priority-indicator"
-                                                style={{ backgroundColor: getPriorityColor(task.priority) }}
-                                            >
-                                                {task.priority}
-                                            </span>
-                                        </div>
-
-                                        <p className="task-description">
-                                            {task.description || 'No description provided'}
-                                        </p>
-
-                                        <div className="task-meta">
-                                            <div className="task-meta-item">
-                                                <span className="meta-label">Due:</span>
-                                                <span className="meta-value">{formatDate(task.dueDate)}</span>
-                                            </div>
-
-                                            <div className="task-meta-item">
-                                                <span className="meta-label">Category:</span>
-                                                <span className="meta-value">{task.category}</span>
-                                            </div>
-
-                                            <div className="task-meta-item">
-                                                <span className="meta-label">Created:</span>
-                                                <span className="meta-value">{formatDate(task.createdAt)}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    <TaskBody
+                        filteredTasks={filteredTasks}
+                        activeFilter={activeFilter}
+                        activeCategoryFilter={activeCategoryFilter}
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        isLoading={isLoading}
+                        error={error}
+                        clearSearch={clearSearch}
+                    />
                 </div>
             </main>
         </div>
