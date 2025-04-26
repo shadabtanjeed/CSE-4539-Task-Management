@@ -19,6 +19,7 @@ function Dashboard() {
     useEffect(() => {
         let filtered = [...tasks];
 
+        // Apply search filter if search term exists
         if (searchTerm.trim() !== '') {
             const term = searchTerm.toLowerCase();
             filtered = filtered.filter(task =>
@@ -45,7 +46,7 @@ function Dashboard() {
         setFilteredTasks(filtered);
     }, [tasks, activeFilter, activeCategoryFilter, activeSort, searchTerm]);
 
-    // sorting function
+    // sorting functions
     const applySorting = (tasks, sortOption) => {
         switch (sortOption) {
             case 'dueDate-asc':
@@ -275,22 +276,30 @@ function Dashboard() {
                                         : 'All Tasks'}
                         </h3>
 
-                        {/* Search Bar */}
-                        <div className="task-search-container">
-                            <div className="search-input-wrapper">
-                                <input
-                                    type="text"
-                                    placeholder="Search in titles and descriptions..."
-                                    className="task-search-input"
-                                    value={searchTerm}
-                                    onChange={handleSearchChange}
-                                />
-                                {searchTerm && (
-                                    <button className="search-clear-btn" onClick={clearSearch}>
-                                        ×
-                                    </button>
-                                )}
+                        {/* Search and Add Task */}
+                        <div className="task-actions-row">
+                            {/* Search bar */}
+                            <div className="task-search-container">
+                                <div className="search-input-wrapper">
+                                    <input
+                                        type="text"
+                                        placeholder="Search in titles and descriptions..."
+                                        className="task-search-input"
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                    {searchTerm && (
+                                        <button className="search-clear-btn" onClick={clearSearch}>
+                                            ×
+                                        </button>
+                                    )}
+                                </div>
                             </div>
+
+                            {/* Add New Task button */}
+                            <button className="add-task-btn">
+                                <span className="plus-icon">+</span> Add New Task
+                            </button>
                         </div>
 
                         {isLoading ? (
