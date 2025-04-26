@@ -229,6 +229,32 @@
     line-height: 1.6;
 }
 
+.sort-dropdown {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: #1a1a1a;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+    cursor: pointer;
+}
+
+.sort-dropdown:focus {
+    outline: none;
+    border-color: #2ecc71;
+}
+
+.sort-dropdown option {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 8px;
+}
+
 @media (max-width: 900px) {
     .dashboard-layout {
         flex-direction: column;

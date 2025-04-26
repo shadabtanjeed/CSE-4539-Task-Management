@@ -7,6 +7,7 @@ function Dashboard() {
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [activeFilter, setActiveFilter] = useState(null);
     const [activeCategoryFilter, setActiveCategoryFilter] = useState(null);
+    const [activeSort, setActiveSort] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -27,8 +28,29 @@ function Dashboard() {
             filtered = filtered.filter(task => task.category === activeCategoryFilter);
         }
 
+        // Apply sorting if set
+        if (activeSort) {
+            filtered = applySorting(filtered, activeSort);
+        }
+
         setFilteredTasks(filtered);
-    }, [tasks, activeFilter, activeCategoryFilter]);
+    }, [tasks, activeFilter, activeCategoryFilter, activeSort]);
+
+    // Function to apply sorting based on selected option
+    const applySorting = (tasks, sortOption) => {
+        switch (sortOption) {
+            case 'dueDate-asc':
+                return [...tasks].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+            case 'dueDate-desc':
+                return [...tasks].sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
+            case 'createdAt-asc':
+                return [...tasks].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+            case 'createdAt-desc':
+                return [...tasks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            default:
+                return tasks;
+        }
+    };
 
     const fetchTasks = async () => {
         try {
@@ -46,21 +68,26 @@ function Dashboard() {
 
     const handleFilterClick = (priority) => {
         if (activeFilter === priority) {
-            // If clicking the active filter, clear it
             setActiveFilter(null);
         } else {
-            // Apply the new filter
             setActiveFilter(priority);
         }
     };
 
     const handleCategoryFilter = (category) => {
         if (activeCategoryFilter === category) {
-            // If clicking the active filter, clear it
             setActiveCategoryFilter(null);
         } else {
-            // Apply the new filter
             setActiveCategoryFilter(category);
+        }
+    };
+
+    // Modified handler for sort dropdown
+    const handleSortChange = (sortOption) => {
+        if (sortOption === '') {
+            setActiveSort(null);
+        } else {
+            setActiveSort(sortOption);
         }
     };
 
@@ -99,6 +126,22 @@ function Dashboard() {
                     <div className="filter-sidebar">
                         <h3>Filters</h3>
 
+                        {/* Sort Section with Dropdown */}
+                        <div className="filter-group">
+                            <h4>Sort By</h4>
+                            <select
+                                className="sort-dropdown"
+                                value={activeSort || ''}
+                                onChange={(e) => handleSortChange(e.target.value)}
+                            >
+                                <option value="">Default Order</option>
+                                <option value="dueDate-asc">Due Date (Oldest First)</option>
+                                <option value="dueDate-desc">Due Date (Newest First)</option>
+                                <option value="createdAt-asc">Creation Date (Oldest First)</option>
+                                <option value="createdAt-desc">Creation Date (Newest First)</option>
+                            </select>
+                        </div>
+
                         {/* Priority Filter Section */}
                         <div className="filter-group">
                             <h4>Priority</h4>
@@ -130,7 +173,7 @@ function Dashboard() {
                             </div>
                         </div>
 
-                        {/* Category Filter Section - Without colors */}
+                        {/* Category Filter Section */}
                         <div className="filter-group">
                             <h4>Category</h4>
                             <div className="filter-options">
@@ -185,11 +228,12 @@ function Dashboard() {
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
 
                     <div className="tasks-container">
                         <h3>
-                            {/* Update header to show both filters if active */}
                             {activeFilter && activeCategoryFilter
                                 ? `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Priority ${activeCategoryFilter.charAt(0).toUpperCase() + activeCategoryFilter.slice(1)} Tasks`
                                 : activeFilter
