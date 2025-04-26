@@ -8,6 +8,7 @@ function Dashboard() {
     const [activeFilter, setActiveFilter] = useState(null);
     const [activeCategoryFilter, setActiveCategoryFilter] = useState(null);
     const [activeSort, setActiveSort] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -17,6 +18,14 @@ function Dashboard() {
 
     useEffect(() => {
         let filtered = [...tasks];
+
+        if (searchTerm.trim() !== '') {
+            const term = searchTerm.toLowerCase();
+            filtered = filtered.filter(task =>
+                task.title.toLowerCase().includes(term) ||
+                (task.description && task.description.toLowerCase().includes(term))
+            );
+        }
 
         // Apply priority filter if set
         if (activeFilter) {
@@ -34,7 +43,7 @@ function Dashboard() {
         }
 
         setFilteredTasks(filtered);
-    }, [tasks, activeFilter, activeCategoryFilter, activeSort]);
+    }, [tasks, activeFilter, activeCategoryFilter, activeSort, searchTerm]);
 
     // sorting function
     const applySorting = (tasks, sortOption) => {
@@ -82,7 +91,6 @@ function Dashboard() {
         }
     };
 
-
     const handleSortChange = (sortOption) => {
         if (sortOption === '') {
             setActiveSort(null);
@@ -91,11 +99,21 @@ function Dashboard() {
         }
     };
 
-
     const clearAllFilters = () => {
         setActiveFilter(null);
         setActiveCategoryFilter(null);
         setActiveSort(null);
+        setSearchTerm('');
+    };
+
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    // Clear search term
+    const clearSearch = () => {
+        setSearchTerm('');
     };
 
     // Get priority color based on task priority
@@ -240,7 +258,7 @@ function Dashboard() {
                         <button
                             className="clear-filters-btn"
                             onClick={clearAllFilters}
-                            disabled={!activeFilter && !activeCategoryFilter && !activeSort}
+                            disabled={!activeFilter && !activeCategoryFilter && !activeSort && !searchTerm}
                         >
                             Clear All Filters
                         </button>
@@ -257,6 +275,24 @@ function Dashboard() {
                                         : 'All Tasks'}
                         </h3>
 
+                        {/* Search Bar */}
+                        <div className="task-search-container">
+                            <div className="search-input-wrapper">
+                                <input
+                                    type="text"
+                                    placeholder="Search in titles and descriptions..."
+                                    className="task-search-input"
+                                    value={searchTerm}
+                                    onChange={handleSearchChange}
+                                />
+                                {searchTerm && (
+                                    <button className="search-clear-btn" onClick={clearSearch}>
+                                        ×
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+
                         {isLoading ? (
                             <div className="loading-message">Loading tasks...</div>
                         ) : error ? (
@@ -264,13 +300,15 @@ function Dashboard() {
                         ) : filteredTasks.length === 0 ? (
                             <div className="empty-state">
                                 <p>
-                                    {activeFilter && activeCategoryFilter
-                                        ? `No ${activeFilter} priority ${activeCategoryFilter} tasks found.`
-                                        : activeFilter
-                                            ? `No ${activeFilter} priority tasks found.`
-                                            : activeCategoryFilter
-                                                ? `No ${activeCategoryFilter} tasks found.`
-                                                : "You don't have any tasks yet."
+                                    {searchTerm
+                                        ? `No tasks matching "${searchTerm}" found.`
+                                        : activeFilter && activeCategoryFilter
+                                            ? `No ${activeFilter} priority ${activeCategoryFilter} tasks found.`
+                                            : activeFilter
+                                                ? `No ${activeFilter} priority tasks found.`
+                                                : activeCategoryFilter
+                                                    ? `No ${activeCategoryFilter} tasks found.`
+                                                    : "You don't have any tasks yet."
                                     }
                                 </p>
                             </div>

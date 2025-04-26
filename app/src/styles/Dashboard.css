@@ -284,6 +284,55 @@
     color: #fff;
 }
 
+.task-search-container {
+    margin-bottom: 1.5rem;
+
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 50%;
+}
+
+.task-search-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    padding-right: 2.5rem;
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.task-search-input:focus {
+    outline: none;
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 1px #2ecc71;
+}
+
+.search-clear-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-clear-btn:hover {
+    color: #fff;
+}
+
 @media (max-width: 900px) {
     .dashboard-layout {
         flex-direction: column;
