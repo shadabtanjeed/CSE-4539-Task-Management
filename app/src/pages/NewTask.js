@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../utils/api';
 import '../styles/NewTask.css';
 
 function NewTask() {
     const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -20,10 +22,24 @@ function NewTask() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Task data to submit:', formData);
-        navigate('/dashboard');
+
+        try {
+            setIsSubmitting(true);
+
+
+            const response = await api.post('/tasks/add-new-task', formData);
+
+            alert('Task created successfully!');
+            navigate('/dashboard');
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || 'Failed to create task. Please try again.';
+            alert(errorMessage);
+            console.error('Error creating task:', error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleBack = () => {
@@ -51,6 +67,7 @@ function NewTask() {
                             onChange={handleChange}
                             placeholder="Enter task title"
                             required
+                            disabled={isSubmitting}
                         />
                     </div>
 
@@ -64,6 +81,7 @@ function NewTask() {
                             placeholder="Enter task description"
                             rows="4"
                             required
+                            disabled={isSubmitting}
                         />
                     </div>
 
@@ -75,6 +93,7 @@ function NewTask() {
                             value={formData.category}
                             onChange={handleChange}
                             required
+                            disabled={isSubmitting}
                         >
                             <option value="" disabled>Select a category</option>
                             <option value="work">Work</option>
@@ -95,6 +114,7 @@ function NewTask() {
                             value={formData.priority}
                             onChange={handleChange}
                             required
+                            disabled={isSubmitting}
                         >
                             <option value="" disabled>Select priority</option>
                             <option value="high">High</option>
@@ -112,15 +132,25 @@ function NewTask() {
                             value={formData.dueDate}
                             onChange={handleChange}
                             required
+                            disabled={isSubmitting}
                         />
                     </div>
 
                     <div className="form-actions">
-                        <button type="button" className="cancel-btn" onClick={handleBack}>
+                        <button
+                            type="button"
+                            className="cancel-btn"
+                            onClick={handleBack}
+                            disabled={isSubmitting}
+                        >
                             Cancel
                         </button>
-                        <button type="submit" className="submit-btn">
-                            Create Task
+                        <button
+                            type="submit"
+                            className="submit-btn"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Creating...' : 'Create Task'}
                         </button>
                     </div>
                 </form>

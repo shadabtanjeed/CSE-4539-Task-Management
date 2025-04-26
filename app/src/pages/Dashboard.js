@@ -161,8 +161,8 @@ function Dashboard() {
                                 onChange={(e) => handleSortChange(e.target.value)}
                             >
                                 <option value="">Default Order</option>
-                                <option value="dueDate-asc">Due Date (Oldest First)</option>
-                                <option value="dueDate-desc">Due Date (Newest First)</option>
+                                <option value="dueDate-asc">Due Date (Earliest)</option>
+                                <option value="dueDate-desc">Due Date (Latest)</option>
                                 <option value="createdAt-asc">Creation Date (Oldest First)</option>
                                 <option value="createdAt-desc">Creation Date (Newest First)</option>
                             </select>
