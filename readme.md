@@ -17,7 +17,7 @@ An web application for managing tasks with user authentication, email verificati
   - Bcrypt for password hashing
 
 - **Email Services**:
-  - Resend API for email verification
+  - Resend API for email verification (navigate to ```Important Notes Section```)
 
 ## Features
 
@@ -32,19 +32,33 @@ An web application for managing tasks with user authentication, email verificati
 - **Task Management (API Only)**
   - Create tasks with title, description, due date, priority, and category
   - Retrieve tasks for logged-in users
+  - Filter and sort tasks
+  - Ability to search for specific task
+  - View task details with the option to update it
+  - Task Deletion
+
 
 ### Pending
 
-- Task editing functionality
-- Task deletion
-- Task filtering and sorting
-- Task categories management
-- User profile management
-- Admin dashboard
-- Task search functionality
-- Task assignment to other users
-- Task status tracking
-- UI enhancements and responsiveness
+- Admin Panel Implementation
+
+### Screenshots
+### Home page 
+
+![Image](https://github.com/user-attachments/assets/815fc1db-d0d9-484a-bc26-39c26037e422)
+
+### Search
+
+![Image](https://github.com/user-attachments/assets/1600f58e-afc5-4d72-82d5-e8f5e892ebb1)
+
+### Add new task
+
+![Image](https://github.com/user-attachments/assets/ab3ad2e7-07e1-4fa4-80ac-201880422f22)
+
+### Task Details
+
+![Image](https://github.com/user-attachments/assets/3ba15eee-7e19-448c-b09c-77f46c2b5fb0)
+
 
 ## Getting Started
 
@@ -93,84 +107,7 @@ npm start
 ```
 3. Open your browser and navigate to `http://localhost:3000` to access the application.
 
-## How to Use
-
-### User Registration and Authentication
-
-1. **Sign Up**: 
-- Navigate to `/signup` 
-- Provide email, username, and password
-- An OTP will be sent to your email
-- Verify your email by entering the OTP
-
-2. **Login**:
-- Navigate to `/login`
-- Enter your credentials
-- Upon successful login, you'll be redirected to the dashboard
-
-### Using the Backend API
-
-The server runs on `http://localhost:5000` and provides the following endpoints:
-
-1. **Authentication**
-- Register: `POST /auth/add_user`
-  ```json
-  {
-    "email": "user@example.com",
-    "username": "user123",
-    "password": "password123"
-  }
-  ```
-- Login: `POST /auth/login`
-  ```json
-  {
-    "username": "user123",
-    "password": "password123"
-  }
-  ```
-
-2. **OTP Verification**
-- Generate OTP: `POST /otp/generate_otp`
-  ```json
-  {
-    "email": "user@example.com"
-  }
-  ```
-- Verify OTP: `POST /otp/verify_otp`
-  ```json
-  {
-    "email": "user@example.com",
-    "otp": "123456"
-  }
-  ```
-
-3. **Task Management** (Protected routes - require JWT token)
-- Create Task: `POST /tasks/add-new-task`
-  ```json
-  {
-    "title": "Complete project",
-    "description": "Finish the task management system",
-    "dueDate": "2023-12-31T23:59:59Z",
-    "priority": "high",
-    "category": "work"
-  }
-  ```
-- Get User Tasks: `GET /tasks/get-tasks`
-
-## Testing with Postman
-
-1. **Register a user** via the frontend or directly through the API
-2. **Login** to get a JWT token
-3. **For protected routes**, add the token to your request headers:
-
-```
-Authorization: Bearer your_jwt_token
-```
-
-
-## Future Improvements
-
-See the "Pending" features list above for planned enhancements to the application.
+**P.S** Make sure MongoDB is installed on your sysyem. 
 
 ## Important Note
 Currently resend api only supports sending otp to the mail you used to open an account in thier platform.
