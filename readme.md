@@ -172,3 +172,7 @@ Authorization: Bearer your_jwt_token
 
 See the "Pending" features list above for planned enhancements to the application.
 
+## Important Note
+Currently resend api only supports sending otp to the mail you used to open an account in thier platform.
+Alternatively, you can view the generated otp from database and use that to verify.
+
