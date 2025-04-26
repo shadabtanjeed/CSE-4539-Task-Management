@@ -4,7 +4,8 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import OtpVerificationPage from './pages/OtpVerificationPage';
 import ProtectedRoute from './components/ProtectedRoute';
-import Dashboard from './pages/Dashboard'; // Create this page
+import Dashboard from './pages/Dashboard';
+import NewTask from './pages/NewTask';
 import './styles/global.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/otp-verification" element={<OtpVerificationPage />} />
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+        <Route path="/add-task" element={<ProtectedRoute element={<NewTask />} />} />
       </Routes>
     </Router>
   );
