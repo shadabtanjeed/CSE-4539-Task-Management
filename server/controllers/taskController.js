@@ -98,4 +98,32 @@ const updateTask = async (req, res) => {
     }
 }
 
-module.exports = { createNewTask, getUserTasks, updateTask };
+const deleteTask = async (req, res) => {
+    try {
+        const { taskId } = req.params;
+        const username = req.user.username;
+
+        // Find the task by ID
+        const task = await Task.findOne({ taskId });
+
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+
+        // Check if the user is the owner of the task
+        if (task.createdBy !== username) {
+            return res.status(403).json({ message: "You don't have permission to delete this task" });
+        }
+
+        await Task.deleteOne({ taskId });
+
+        return res.status(200).json({
+            message: "Task deleted successfully"
+        });
+    } catch (error) {
+        console.error("Error deleting task:", error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+module.exports = { createNewTask, getUserTasks, updateTask, deleteTask };

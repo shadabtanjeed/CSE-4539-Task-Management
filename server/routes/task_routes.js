@@ -6,5 +6,6 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 router.post('/add-new-task', authenticateToken, taskController.createNewTask);
 router.get('/get-tasks', authenticateToken, taskController.getUserTasks);
 router.put('/update-task/:taskId', authenticateToken, taskController.updateTask);
+router.delete('/delete-task/:taskId', authenticateToken, taskController.deleteTask);
 
 module.exports = router;
