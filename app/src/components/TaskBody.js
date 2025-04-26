@@ -140,6 +140,16 @@ function TaskBody({
                                     <span className="meta-value">{formatDate(task.createdAt)}</span>
                                 </div>
                             </div>
+
+                            {/* Task action buttons */}
+                            <div className="task-actions">
+                                <button className="task-btn details-btn">
+                                    Details
+                                </button>
+                                <button className="task-btn delete-btn">
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
